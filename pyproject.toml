@@ -1,0 +1,11 @@
+[project]
+name = "openbudget-mcp"
+version = "0.1.0"
+description = "MCP server for OpenBudget API"
+authors = []
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastmcp",
+    "httpx"
+]

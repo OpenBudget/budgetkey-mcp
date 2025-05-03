@@ -1,0 +1,102 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Get budget related information",
+    "description": "Retrieves a various budget related information from the budgetkey api",
+    "version": "v1.2.0"
+  },
+  "servers": [
+    {
+      "url": "https://next.obudget.org"
+    }
+  ],
+  "paths": {
+    "/api/tables/{dataset}/info": {
+      "get": {
+        "description": "Get information regarding a specific dataset, including its columns and db schema",
+        "operationId": "DatasetInfo",
+        "parameters": [
+          {
+            "name": "dataset",
+            "in": "path",
+            "description": "id of the dataset to get information for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/tables/{dataset}/search": {
+      "get": {
+        "description": "Full text search on a specific dataset",
+        "operationId": "DatasetFullTextSearch",
+        "parameters": [
+          {
+            "name": "dataset",
+            "in": "path",
+            "description": "id of the dataset to search",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Free text search query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/tables/{dataset}/query": {
+      "get": {
+        "description": "Perform SQL on a specific dataset's database",
+        "operationId": "DatasetDBQuery",
+        "parameters": [     
+          {
+            "name": "dataset",
+            "in": "path",
+            "description": "id of the dataset to query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },          
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Postgresql compatible SQL query to execute, based on the dataset's database schema",
+            "example": "SELECT * FROM budget_items_data",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of rows to return, has to be 30",
+            "example": 20,
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 30
+            }
+          }
+        ],
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
