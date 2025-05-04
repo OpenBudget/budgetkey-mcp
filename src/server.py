@@ -59,7 +59,7 @@ async def query_dataset(dataset: str, sql_query: str, ctx: Context) -> Dict:
     ctx.info(f"Successfully executed SQL query on dataset {dataset}")
     return result
 
-@server.resource("/available_datasets")
+@server.resource("resource://available_datasets")
 def get_available_datasets():
     """Get the list of available datasets."""
     return AVAILABLE_DATASETS
