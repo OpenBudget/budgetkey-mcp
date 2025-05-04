@@ -9,8 +9,6 @@ Allowing easy access to budget data, contracts, and supports information.</br>
 It serves as a bridge between the OpenBudget API and MCP clients.
 
 This project is possible only thanks to amazing work of [OpenBudget/BudgetKey](https://github.com/OpenBudget/BudgetKey) team.</br>
-See their [UsingTheAPI](https://github.com/OpenBudget/BudgetKey/blob/master/documentation/UsingTheAPI.md) for more details about the API used in this MCP server.</br>
-If you wish to craft your own queries or tool you can use their [Redash](http://data.obudget.org/) to test them (You can see my queries in [ILBudgetServer.py](ILBudgetServer.py)).
 
 ## Features
 

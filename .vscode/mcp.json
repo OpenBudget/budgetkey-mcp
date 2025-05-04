@@ -1,0 +1,20 @@
+{
+    "servers": {
+      "OpenBudget": {
+        "type": "stdio",
+        "command": "uv",
+              "args": [
+                "run",
+                "--with",
+                "fastmcp",
+                "--with",
+                "httpx",
+                "--with",
+                "typing",
+                "fastmcp",
+                "run",
+                "{YOUR-LOCAL-PATH}\\server.py"
+              ]
+      }
+    }
+  }
