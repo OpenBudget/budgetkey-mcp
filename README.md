@@ -101,7 +101,7 @@ The server is based on the OpenBudget API. For more details about the API endpoi
 
 ## Contributing
 
-We welcome contributions to help improve the DataGov Israel MCP server.</br>
+We welcome contributions to help improve the BudgetKey Israel MCP server.</br>
 Whether you want to add new tools, enhance existing functionality, or improve documentation, your input is valuable.
 
 For examples of other MCP servers and implementation patterns, see the [Model Context Protocol servers repository](https://github.com/modelcontextprotocol/servers).
