@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/openbudget-budgetkey-mcp-badge.png)](https://mseep.ai/app/openbudget-budgetkey-mcp)
+
 # OpenBudget MCP Server
 
 An MCP server that provides access to the OpenBudget API, allowing you to query and search various budget-related datasets.
