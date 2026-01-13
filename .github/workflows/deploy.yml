@@ -1,0 +1,36 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Build
+      env:
+        TRAVIS_CI_OPERATOR: "1"
+        DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        GITHUB_TOKEN: ${{ secrets.K8S_GITHUB_TOKEN }}
+      run: |
+        ./ci.sh install
+        ./ci.sh script
+    - name: Deploy
+      env:
+        TRAVIS_CI_OPERATOR: "1"
+        DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        GITHUB_TOKEN: ${{ secrets.K8S_GITHUB_TOKEN }}
+      run: |
+        ./ci.sh deploy
+        ./ci.sh bump
