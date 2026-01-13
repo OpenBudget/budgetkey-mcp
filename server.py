@@ -3,6 +3,7 @@ import logging
 
 import requests
 from fastmcp import FastMCP
+from fastmcp.tools.tool import ToolAnnotations
 from starlette.responses import Response
 
 # Set up logging
@@ -61,13 +62,20 @@ Budget data is available from 1997 to 2025.
 - Always suggest further research directions when applicable
 """
 
+ANNOTATIONS = ToolAnnotations(
+    readOnlyHint=True,
+    openWorldHint=True,
+    idempotentHint=True,
+    destructiveHint=False,
+)
+
 mcp = FastMCP(
     name="BudgetKey",
     instructions=MCP_INSTRUCTIONS,
 )
 
 
-@mcp.tool()
+@mcp.tool(annotations=ANNOTATIONS)
 def DatasetInfo(dataset: str) -> dict:
     """
     Get comprehensive information about a dataset, including its columns and database schema.
@@ -114,7 +122,7 @@ def DatasetInfo(dataset: str) -> dict:
         return {"error": str(e)}
 
 
-@mcp.tool()
+@mcp.tool(annotations=ANNOTATIONS)
 def DatasetFullTextSearch(dataset: str, q: str) -> dict:
     """
     Perform full-text search on a dataset to locate relevant items and identifiers.
@@ -168,7 +176,7 @@ def DatasetFullTextSearch(dataset: str, q: str) -> dict:
         return {"error": str(e)}
 
 
-@mcp.tool()
+@mcp.tool(annotations=ANNOTATIONS)
 def DatasetDBQuery(dataset: str, query: str, page_size: int = 50) -> dict:
     """
     Execute PostgreSQL-compatible SQL queries to obtain comprehensive, precise information from datasets.
