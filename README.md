@@ -156,10 +156,11 @@ docker build -t budgetkey-mcp .
 # Start the server
 python server.py
 
-# In another terminal, test with curl
-curl -X POST http://localhost:8000/mcp/endpoints/DatasetInfo \
-  -H "Content-Type: application/json" \
-  -d '{"dataset": "budget_items_data"}'
+# Test the health check endpoint
+curl http://localhost:8000/mcp/health
+
+# To test MCP functionality, configure Claude Desktop to use http://localhost:8000/mcp
+# or use an MCP client library to connect to the server
 ```
 
 ## Contributing

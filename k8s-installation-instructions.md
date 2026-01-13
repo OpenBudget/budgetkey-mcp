@@ -196,11 +196,8 @@ kubectl get svc -n budgetkey -l app=mcp
 # Check logs
 kubectl logs -n budgetkey -l app=mcp --tail=50
 
-# Test the endpoint
-curl https://next.obudget.org/mcp/endpoints/DatasetInfo \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"dataset": "budget_items_data"}'
+# Test the health check endpoint
+curl https://next.obudget.org/mcp/health
 ```
 
 ## CI/CD Integration
@@ -273,12 +270,11 @@ kubectl get events -n budgetkey --sort-by='.lastTimestamp'
 ### Connection issues
 
 ```bash
-# Test internal service connectivity
+# Test internal service connectivity (health check)
 kubectl run -it --rm debug --image=curlimages/curl --restart=Never -n budgetkey -- \
-  curl http://mcp:8000/mcp/endpoints/DatasetInfo \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"dataset": "budget_items_data"}'
+  curl http://mcp:8000/mcp/health
+
+# For full MCP protocol testing, configure an MCP client to connect to the service
 ```
 
 ### Image pull errors
