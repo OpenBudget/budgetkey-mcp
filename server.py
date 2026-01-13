@@ -249,7 +249,7 @@ def DatasetDBQuery(dataset: str, query: str, page_size: int = 50) -> dict:
         return {"error": str(e)}
 
 
-@mcp.custom_route('/health', methods=['GET'])
+@mcp.custom_route('/mcp/health', methods=['GET'])
 async def health_check(request):
     """Health check endpoint for Kubernetes probes"""
     return Response('{"status": "healthy"}', media_type="application/json")
