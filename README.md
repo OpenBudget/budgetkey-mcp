@@ -56,7 +56,9 @@ Execute SQL queries on a dataset's database to retrieve precise information. Alw
 
 ## Installation
 
-### Using Claude Desktop
+> **📖 For detailed integration instructions with Claude Desktop, VS Code, Cursor, and other clients, see the [Integration Guide](./INTEGRATION-GUIDE.md)**
+
+### Quick Start: Claude Desktop
 
 Add to your Claude Desktop configuration file:
 
@@ -67,11 +69,14 @@ Add to your Claude Desktop configuration file:
 {
   "mcpServers": {
     "budgetkey": {
+      "type": "http",
       "url": "https://next.obudget.org/mcp"
     }
   }
 }
 ```
+
+Restart Claude Desktop and you're ready to query Israeli budget data!
 
 ### Using Docker
 
@@ -173,6 +178,7 @@ This project follows the same license as the BudgetKey project.
 
 ## Links
 
+- [Integration Guide](./INTEGRATION-GUIDE.md) - Detailed setup for Claude Desktop, VS Code, Cursor, and Python
 - [BudgetKey Website](https://next.obudget.org)
 - [BudgetKey API Documentation](https://next.obudget.org/api/docs)
 - [MCP Protocol](https://modelcontextprotocol.io/)
