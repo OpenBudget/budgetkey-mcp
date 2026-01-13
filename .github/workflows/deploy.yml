@@ -9,28 +9,51 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
       with:
         python-version: "3.11"
-    - name: Build
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build Docker image
       env:
-        TRAVIS_CI_OPERATOR: "1"
-        DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        GITHUB_TOKEN: ${{ secrets.K8S_GITHUB_TOKEN }}
+        DOCKER_IMAGE: ghcr.io/openbudget/budgetkey-mcp
+        GITHUB_SHA: ${{ github.sha }}
       run: |
-        ./ci.sh install
-        ./ci.sh script
-    - name: Deploy
+        docker build -t ${DOCKER_IMAGE}:latest -t ${DOCKER_IMAGE}:${GITHUB_SHA} .
+
+    - name: Push Docker image
       env:
-        TRAVIS_CI_OPERATOR: "1"
-        DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        GITHUB_TOKEN: ${{ secrets.K8S_GITHUB_TOKEN }}
+        DOCKER_IMAGE: ghcr.io/openbudget/budgetkey-mcp
+        GITHUB_SHA: ${{ github.sha }}
       run: |
-        ./ci.sh deploy
-        ./ci.sh bump
+        docker push ${DOCKER_IMAGE}:latest
+        docker push ${DOCKER_IMAGE}:${GITHUB_SHA}
+
+    - name: Update Kubernetes deployment
+      env:
+        GITHUB_TOKEN: ${{ secrets.K8S_GITHUB_TOKEN }}
+        GITHUB_SHA: ${{ github.sha }}
+        DOCKER_IMAGE: ghcr.io/openbudget/budgetkey-mcp
+      run: |
+        docker run -e CLONE_PARAMS="--branch master https://github.com/OpenBudget/budgetkey-k8s.git" \
+                   -e YAML_UPDATE_JSON='{"mcp":{"image":"'"${DOCKER_IMAGE}:${GITHUB_SHA}"'"}}' \
+                   -e YAML_UPDATE_FILE="values.auto-updated.yaml" \
+                   -e GIT_USER_EMAIL="budgetkey-deployer@null.void" \
+                   -e GIT_USER_NAME="budgetkey-deployer" \
+                   -e GIT_COMMIT_MESSAGE="automatic update of budgetkey-mcp" \
+                   -e PUSH_PARAMS="https://${GITHUB_TOKEN}@github.com/OpenBudget/budgetkey-k8s.git master" \
+                   orihoch/github_yaml_updater

@@ -81,10 +81,12 @@ Restart Claude Desktop and you're ready to query Israeli budget data!
 ### Using Docker
 
 ```bash
-docker run -p 8000:8000 budgetkey/budgetkey-mcp:latest
+docker run -p 8000:8000 ghcr.io/openbudget/budgetkey-mcp:latest
 ```
 
 The server will be available at `http://localhost:8000/mcp`
+
+**Note**: The Docker image is hosted on GitHub Container Registry under the OpenBudget organization.
 
 ### From Source
 
@@ -152,8 +154,10 @@ budgetkey-mcp/
 ### Building
 
 ```bash
-docker build -t budgetkey-mcp .
+docker build -t ghcr.io/openbudget/budgetkey-mcp:latest .
 ```
+
+**CI/CD**: The GitHub Actions workflow automatically builds and publishes Docker images to GitHub Container Registry on every push to `main`.
 
 ### Testing
 
@@ -179,6 +183,7 @@ This project follows the same license as the BudgetKey project.
 ## Links
 
 - [Integration Guide](./INTEGRATION-GUIDE.md) - Detailed setup for Claude Desktop, VS Code, Cursor, and Python
+- [Docker Image](https://github.com/OpenBudget/budgetkey-mcp/pkgs/container/budgetkey-mcp) - GitHub Container Registry
 - [BudgetKey Website](https://next.obudget.org)
 - [BudgetKey API Documentation](https://next.obudget.org/api/docs)
 - [MCP Protocol](https://modelcontextprotocol.io/)

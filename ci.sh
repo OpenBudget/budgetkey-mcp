@@ -8,7 +8,7 @@ DEPLOY_GIT_USER=budgetkey-deployer
 
 DEPLOY_COMMIT_MESSAGE="automatic update of budgetkey-mcp"
 DEPLOY_VALUES_CHART_NAME=mcp
-DOCKER_IMAGE=budgetkey/budgetkey-mcp
+DOCKER_IMAGE=ghcr.io/openbudget/budgetkey-mcp
 
 
 if [ "${1}" == "install" ]; then
